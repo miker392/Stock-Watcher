@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Heroic Features - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/heroic-features.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="text-center">
+        <!-- Jumbotron Header -->
+        <header class="jumbotron my-4">
+            <h1 class="display-3">Stock-Watcher</h1>
+            <form action="/" method="post" ALIGN='center'>
+                {% csrf_token %}
+                <input id="new_stock" type="text" name="new_stock" value="" placeholder="GOOGL">
+                <input type="submit" value="Add Stock" class="btn btn-primary btn-lg ">
+            </form>
+        </header>
+    </div>
+    
+    <!-- Page Features -->
+    <div class="row text-center">
+      {% for stock in stocksList %}
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+            <div class="card-body">
+                <h4 class="card-title">{{stock.stock_symbol}}</h4>
+                <p class="card-text">Current: {{stock.last_price}}
+                    <br>Change: {{stock.change}}
+                    <br>High: {{stock.high}}
+                    <br>Low: {{stock.low}}
+                    <br>As of {{stock.last_checked}}
+                </p>
+            </div>
+            <div class="card-footer">               
+                {% if stock.pk %}
+                    <form action="{% url 'delete_view' pk=stock.pk %}" method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-primary" type="submit" value="Delete"/>
+                    </form>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Powered by Django</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>
