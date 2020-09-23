@@ -1,0 +1,49 @@
+.marquee {
+  height: 65px;
+  width: 80%;
+
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  padding: 8px 0 4px 0px;
+}
+
+/* would need to be adjusted depending on time */
+.marquee .marqueeStock{
+  animation: marquee 95s linear infinite;
+  font-size: 45px;
+}
+
+/* even out the elements */
+.marquee div {
+  position: relative;
+  width: 100%;
+  left: 100%;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+}
+
+.marquee:hover div {
+  animation-play-state: paused;
+}
+
+.stockSpan span{
+  margin-right: 30px;
+  display: flex;
+}
+
+/* add delay at the end of animation so you dont start while another div is going - play around with this
+    if the stock list is being cutoff too early or not showing everything at the start. It's not ideal but
+    it will work for this purpose. */
+@keyframes marquee {
+  0% { left: 300%; }
+  50% { left: 0%; }
+  100% {left: -300%}
+}
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/3909a7");
+
+  
+@font-face {font-family: 'UniversLTPro-Ex';src: url('webfonts/3909A7_0_0.eot');src: url('webfonts/3909A7_0_0.eot?#iefix') format('embedded-opentype'),url('webfonts/3909A7_0_0.woff2') format('woff2'),url('webfonts/3909A7_0_0.woff') format('woff'),url('webfonts/3909A7_0_0.ttf') format('truetype');}

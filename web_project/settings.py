@@ -117,13 +117,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = '/static/'
 
-# Tiingo
-import os
-import sys
-from tiingo import TiingoClient
+# Not sure where the logging configuration belongs in Python so just sticking it here for now.
+#   Hopefully I get back to putting it in an appropriate space
+import logging
+logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
-config = {}
-config['session'] = True
-config['api_key'] = TIINGO_API_KEY
-tiingoClient = TiingoClient(config)
-
+# Alpaca
+import alpaca_trade_api as alpacaTradeApi
+alpacaApiClient = alpacaTradeApi.REST(APCA_API_KEY_ID, APCA_API_SECRET_KEY, base_url='https://paper-api.alpaca.markets')
