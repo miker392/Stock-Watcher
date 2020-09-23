@@ -4,4 +4,5 @@ This was just a project to learn Python. This is meant to be a stock dashboard. 
 
 The secret settings file looks like this:\
 SECRET_KEY = 'secret_key'\
-TIINGO_API_KEY = ''tiingo_api_key
+APCA_API_KEY_ID = ''Alpaca Api Key
+APCA_API_SECRET_KEY = ''Alpaca Secret Key
