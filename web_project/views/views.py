@@ -10,13 +10,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import DeleteView
 from django.core.serializers.json import DjangoJSONEncoder
 from web_project.models.alpaca import *
+from decimal import *
 
 import datetime
 import pandas
 import json
 import pytz
 
-MinutesBeforeRefreshStocks = 5
+SecondsBeforeRefreshStocks = 30
 
 def index(request):
     if request.method == 'POST':
@@ -63,12 +64,12 @@ def getStockByStockSymbol (stockSymbol):
 def getStockByStock (stock):
     stockResult = Stock.objects.get(stock_symbol = stock.stock_symbol)
 
-    if stockResult and stockResult.last_checked <= timezone.now() - datetime.timedelta(minutes = MinutesBeforeRefreshStocks):
+    if stockResult and stockResult.last_checked <= timezone.now() - datetime.timedelta(seconds = SecondsBeforeRefreshStocks):
         stockFromApi = getStockByStockSymbol(stock.stock_symbol)
+        stockChange = round(Decimal(stockFromApi.last_price), 2) - stock.last_price
         stock.last_checked = timezone.now()
         stock.last_price = stockFromApi.last_price
-
-        stockChange = stockFromApi.last_price - stock.last_price
+        
         if stockChange > 0 or stockChange < 0:
             stock.change = stockChange
 
